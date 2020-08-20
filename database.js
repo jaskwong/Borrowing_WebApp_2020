@@ -1,7 +1,7 @@
 // sourced from https://codeburst.io/node-js-mysql-and-promises-4c3be599909b
 const mysql = require( 'mysql' );
 class Database {
-    constructor( config ) {
+    constructor() {
         this.connection = mysql.createConnection( {
             host: 'localhost',
             user: 'root',
@@ -30,5 +30,5 @@ class Database {
 }
 
 module.exports = {
-    db: new Database(null)
+    db: new Database()
 }

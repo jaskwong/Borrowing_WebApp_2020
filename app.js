@@ -18,24 +18,32 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-var mysql = require('mysql')
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'borrowApp2020',
-    database: 'borrowApp_db'
-})
 
-connection.connect()
+var db = require('./database').db;
 
-
-connection.query('show tables', function (err, rows, fields) {
-    if (err) throw err
-
-    console.log(rows)
-})
-
-connection.end()
+function borrow(itemName, groupID, userID, amount) {
+    var remaining = 0;
+    db.query(`SELECT * FROM items WHERE itemname = ? AND groupid = ?`, [itemName, groupID])
+        .then(rows => {
+            remaining = rows[0].remaining;
+            console.log('remaining: ' + remaining)
+            // TODO: add error checking amount > remaining
+            let newRemaining = remaining - amount;
+            console.log('newRemaining: ' + newRemaining)
+            db.query("UPDATE items SET remaining = ? WHERE itemname = ? AND groupid = ?", [newRemaining, itemName, groupID]);
+        })
+        .then(rows => {
+        // TODO: decide how to generate borrowID or check that id is not already in use
+        var borrowID = Math.floor(Math.random() * 1000); // random 9 digit number
+            console.log("borrowID: " + borrowID);
+        // TODO: decide how to manage timezones
+        var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        db.query(`INSERT INTO borrowed VALUES (?, ?, ?, ?, ?, ?)`, [borrowID, itemName, groupID, userID, amount, datetime])
+    }).then(rows => {
+        db.close();
+    })
+}
+borrow("item3", 1, "user1.1", 1)
 
 
 

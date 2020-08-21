@@ -27,6 +27,13 @@ class Database {
             } );
         } );
     }
+    createBorrowGroup(grpname) {
+        let groupid = Math.floor(Math.random() * 1000);
+        return this.query(`INSERT INTO borrowgroups
+                     VALUES (?,?)`,
+            [groupid, grpname]);
+    }
+
 }
 
 module.exports = {

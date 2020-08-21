@@ -11,12 +11,6 @@ function getReqBody(req) {
         }
     })
 }
-function createBorrowGroup(grpname) {
-    let groupid = Math.floor(Math.random() * 1000);
-    return db.query(`INSERT INTO borrowgroups
-                     VALUES (?,?)`,
-        [groupid, grpname])
-}
 
 
 /* GET home page. */
@@ -26,11 +20,11 @@ router.get('/', function (req, res, next) {
 
 router.post('/creategroup', function (req, res, next) {
   getReqBody(req).then(body => {
-      createBorrowGroup(body.grpname)
+      return db.createBorrowGroup(body.grpname)
     }).then(rows => {
             res.sendStatus(200);
     }).catch(err => {
-      console.log("error");
+      console.log(err);
   })
 
 });

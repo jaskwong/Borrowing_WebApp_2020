@@ -6,7 +6,7 @@ class Database {
             host: 'localhost',
             user: 'root',
             password: 'borrowApp2020',
-            database: 'borrowApp_db'
+            database: 'test'
         } );
     }
     query( sql, args ) {

@@ -18,6 +18,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+var mysql = require('mysql')
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'borrowApp2020',
+    database: 'borrowApp_db'
+})
 
 var db = require('./database').db;
 
@@ -43,7 +50,205 @@ function borrow(itemName, groupID, userID, amount) {
         db.close();
     })
 }
-borrow("item3", 1, "user1.1", 1)
+
+function viewUser(groupid){
+
+    connection.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+    })
+
+    connection.query(
+        'SELECT userid FROM users WHERE groupid = ?', [groupid],
+        function (err, rows, fields) {
+            if (err) throw err
+
+            console.log(rows)
+        })
+
+}
+
+function viewItems(groupid){
+
+    connection.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+    })
+
+    connection.query(
+        'SELECT * FROM items WHERE groupid = ?', [groupid],
+        function (err, rows, fields) {
+            if (err) throw err
+
+            console.log(rows)
+        })
+
+}
+
+function viewBorrowed(groupid, filt_users, filt_items){
+    // assuming in front end we'd need to use viewUser and viewItems to grab a list of all users/items
+    // filt_items is list of itemnames we're looking for, filt_users is a list of usernames
+    // Note: they automatically convert arrays to proper sql-formatted arrays
+
+    connection.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+    })
+
+    // no filtered items
+    if (filt_users.length == 0 && filt_items.length == 0){
+        connection.query(
+            `
+            SELECT 
+                itemname, userid, amount, borrowdate 
+            FROM borrowed 
+            WHERE groupid = ?
+            `, [groupid],
+            function (err, rows, fields) {
+                if (err) throw err
+
+                console.log(rows)
+            })
+    }
+
+    // filter by item but not user
+    else if (filt_users.length == 0){
+        connection.query(
+            `
+            SELECT 
+                itemname, userid, amount, borrowdate 
+            FROM borrowed 
+            WHERE groupid = ? AND itemname IN (?)
+            `, [groupid, filt_items],
+            function (err, rows, fields) {
+                if (err) throw err
+
+                console.log(rows)
+            })
+
+    }
+
+    // filter by user but not item
+    else if (filt_items.length == 0){
+        connection.query(
+            `
+            SELECT 
+                itemname, userid, amount, borrowdate 
+            FROM borrowed 
+            WHERE groupid = ? AND userid IN (?)
+            `, [groupid, filt_users],
+            function (err, rows, fields) {
+                if (err) throw err
+
+                console.log(rows)
+            })
+
+    }
+
+    // filter by both
+    else {
+        connection.query(
+            `
+            SELECT 
+                itemname, userid, amount, borrowdate 
+            FROM borrowed 
+            WHERE groupid = ? AND itemname IN (?) AND userid IN (?)
+            `, [groupid, filt_items, filt_users],
+            function (err, rows, fields) {
+                if (err) throw err
+
+                console.log(rows)
+            })
+
+    }
+
+}
+
+function viewReturned(groupid, filt_users, filt_items){
+    // assuming in front end we'd need to use viewUser and viewItems to grab a list of all users/items
+    // filt_items is list of itemnames we're looking for, filt_users is a list of usernames
+    // Note: they automatically convert arrays to proper sql-formatted arrays
+
+    connection.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+    })
+
+    // no filtered items
+    if (filt_users.length == 0 && filt_items.length == 0){
+        connection.query(
+            `
+            SELECT 
+                returned.amount, returned.returndate, borrowed.itemname, borrowed.userid, borrowed.borrowdate
+            FROM borrowed INNER JOIN returned ON borrowed.borrowid=returned.borrowid 
+            WHERE borrowed.groupid = ?
+            `, [groupid],
+            function (err, rows, fields) {
+                if (err) throw err
+
+                console.log(rows)
+            })
+    }
+
+    // filter by item but not user
+    else if (filt_users.length == 0){
+        connection.query(
+            `
+            SELECT 
+                returned.amount, returned.returndate, borrowed.itemname, borrowed.userid, borrowed.borrowdate 
+            FROM borrowed INNER JOIN returned ON borrowed.borrowid=returned.borrowid
+            WHERE borrowed.groupid = ? AND borrowed.itemname IN (?)
+            `, [groupid, filt_items],
+            function (err, rows, fields) {
+                if (err) throw err
+
+                console.log(rows)
+            })
+
+    }
+
+    // filter by user but not item
+    else if (filt_items.length == 0){
+        connection.query(
+            `
+            SELECT 
+                returned.amount, returned.returndate, borrowed.itemname, borrowed.userid, borrowed.borrowdate 
+            FROM borrowed INNER JOIN returned ON borrowed.borrowid=returned.borrowid
+            WHERE borrowed.groupid = ? AND borrowed.userid IN (?)
+            `, [groupid, filt_users],
+            function (err, rows, fields) {
+                if (err) throw err
+
+                console.log(rows)
+            })
+
+    }
+
+    // filter by both
+    else {
+        connection.query(
+            `SELECT 
+                returned.amount, returned.returndate, borrowed.itemname, borrowed.userid, borrowed.borrowdate 
+            FROM borrowed INNER JOIN returned ON borrowed.borrowid=returned.borrowid
+            WHERE borrowed.groupid = ? AND borrowed.itemname IN (?) AND borrowed.userid IN (?)
+            `, [groupid, filt_items, filt_users],
+            function (err, rows, fields) {
+                if (err) throw err
+
+                console.log(rows)
+            })
+
+    }
+
+}
+
+//viewUser(1)
+
+//viewItems(1)
+
+//viewBorrowed(1, [], [])
+
+//borrow("item3", 1, "user1.1", 1)
 
 
 

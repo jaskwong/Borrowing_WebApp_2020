@@ -25,6 +25,7 @@ app.use("/testcreategroup", testcreategroupRouter)
 
 var db = require('./database').db;
 
+
 function borrow(itemName, groupID, userID, amount) {
     var remaining = 0;
     db.query(`SELECT * FROM items WHERE itemname = ? AND groupid = ?`, [itemName, groupID])

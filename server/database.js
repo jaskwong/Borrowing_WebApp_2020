@@ -1,7 +1,7 @@
 // sourced from https://codeburst.io/node-js-mysql-and-promises-4c3be599909b
 const mysql = require( 'mysql' );
 class Database {
-    constructor( config ) {
+    constructor() {
         this.connection = mysql.createConnection( {
             host: 'localhost',
             user: 'root',
@@ -27,8 +27,15 @@ class Database {
             } );
         } );
     }
+    createBorrowGroup(grpname) {
+        let groupid = Math.floor(Math.random() * 1000);
+        return this.query(`INSERT INTO borrowgroups
+                     VALUES (?,?)`,
+            [groupid, grpname]);
+    }
+
 }
 
 module.exports = {
-    db: new Database(null)
+    db: new Database()
 }

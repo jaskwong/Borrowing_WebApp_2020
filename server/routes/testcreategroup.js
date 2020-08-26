@@ -17,9 +17,8 @@ router.get("/viewgroup", function (req,res,next){
 router.post('/creategroup', function (req, res, next) {
     db.createBorrowGroup(req.body.groupname).then(rows => {
         console.log(rows);
-        res.sendStatus(200)
+        res.sendStatus(200);
     })
-
 });
 
 module.exports=router;

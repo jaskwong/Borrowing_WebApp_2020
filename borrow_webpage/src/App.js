@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios'
+import * as url from "url";
+const baseurl = 'http://localhost:9000';
 
 export default class App extends Component {
 
@@ -24,7 +26,7 @@ export default class App extends Component {
 
     const groupid = this.state.groupid
 
-    axios.get("http://localhost:9000/testcreategroup/viewgroup", { params:{groupid: groupid} })
+    axios.get(url.resolve(baseurl, '/testcreategroup/viewgroup'), { params:{groupid: groupid} })
         .then(res => this.setState({apiResponse:JSON.stringify(res.data)}))
   }
 

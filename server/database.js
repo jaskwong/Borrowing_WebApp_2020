@@ -6,10 +6,10 @@ class Database {
             host: 'localhost',
             user: 'root',
             password: 'borrowApp2020',
-            database: 'test'
+            database: 'borrowApp_db'
         } );
     }
-    query( sql, args ) {
+    async query( sql, args ) {
         return new Promise( ( resolve, reject ) => {
             this.connection.query( sql, args, ( err, rows ) => {
                 if ( err )
@@ -27,11 +27,23 @@ class Database {
             } );
         } );
     }
-    createBorrowGroup(grpname) {
+    async createBorrowGroup(grpname) {
         let groupid = Math.floor(Math.random() * 1000);
-        return this.query(`INSERT INTO borrowgroups
+        let temp = await this.query(`INSERT INTO borrowgroups
                      VALUES (?,?)`,
             [groupid, grpname]);
+        let rows = await this.query(`SELECT * FROM borrowgroups
+                     WHERE groupid = ?`,
+            [groupid]);
+        return rows;
+    }
+    async viewUser(groupid) {
+        try {
+            let rows = await this.query('SELECT userid FROM users WHERE groupid = ?', [groupid])
+            return JSON.stringify((rows));
+        } catch (err) {
+            console.log("error with viewUser")
+        }
     }
 
 }

@@ -6,7 +6,7 @@ import axios from 'axios'
 import * as url from "url";
 const baseurl = 'http://localhost:9000';
 
-export default class App extends Component {
+export default class ViewGroup extends Component {
 
   constructor(props) {
     super(props);
@@ -39,7 +39,7 @@ export default class App extends Component {
         <input type={"text"} id={"GroupID"} name={"GroupID"} onChange={this.changeViewGroup}/>
         <input type={"submit"} value={"Submit"}/>
       </form>
-      <p className={"App-intro"}>{this.state.apiResponse}</p>
+      <p className={"ViewGroup-intro"}>{this.state.apiResponse}</p>
     </header>
   </div>)};
 }

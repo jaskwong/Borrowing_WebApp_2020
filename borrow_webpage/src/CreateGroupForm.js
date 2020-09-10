@@ -9,7 +9,7 @@ const baseurl = 'http://localhost:9000';
 
 export default class CreateGroupForm extends Component {
 
-    state = {groupname: "", groupid: 0, groupnamefinal: ""};
+    state = {groupname: "", groupid: null, groupnamefinal: ""};
 
 
     changeCreateGroupName = event => {
@@ -25,6 +25,9 @@ export default class CreateGroupForm extends Component {
             .then(res => {
                 this.setState({groupnamefinal: res.data.groupname})
                 this.setState({groupid: res.data.groupid})
+                document.getElementById("response").innerHTML = "Your group " + this.state.groupnamefinal + " was created with groupID "
+                + this.state.groupid;
+
             })
     }
 
@@ -37,7 +40,7 @@ export default class CreateGroupForm extends Component {
                     <input type={"text"} id={"groupname"} name={"groupname"} onChange={this.changeCreateGroupName}/>
                     <input type={"submit"} value={"Submit"}/>
                 </form>
-                <p>New group {this.state.groupnamefinal} created with groupID {this.state.groupid}</p>
+                <p id="response"></p>
             </div>)
     }
 }

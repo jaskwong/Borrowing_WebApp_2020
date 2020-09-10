@@ -9,7 +9,7 @@ const baseurl = 'http://localhost:9000';
 
 export default class CreateGroupForm extends Component {
 
-    state = {groupname: "", apiResponse: "", groupid: 0};
+    state = {groupname: ""};
 
 
     changeCreateGroupName = event => {

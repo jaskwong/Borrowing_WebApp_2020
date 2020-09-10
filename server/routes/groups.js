@@ -9,11 +9,6 @@ function getRequestBody(req) {
     })
 }
 
-
-router.get("/", function (req, res, next) {
-    res.send("Hoi");
-})
-
 router.get("/viewgroup", function (req, res, next) {
     // console.log(req.query.groupid);
     db.viewUser(parseInt(req.query.groupid)).then(rows => {

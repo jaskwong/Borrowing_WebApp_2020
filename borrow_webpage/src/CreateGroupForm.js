@@ -21,7 +21,7 @@ export default class CreateGroupForm extends Component {
 
         const groupname = {groupname: this.state.groupname}
 
-        axios.post(url.resolve(baseurl, '/testcreategroup/creategroup'), groupname)
+        axios.post(url.resolve(baseurl, '/groups/creategroup'), groupname)
             .then(res => {
                 this.setState({groupnamefinal: res.data.groupname})
                 this.setState({groupid: res.data.groupid})

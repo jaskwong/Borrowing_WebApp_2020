@@ -6,7 +6,7 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var testcreategroupRouter = require('./routes/testcreategroup')
+var testcreategroupRouter = require('./routes/groups')
 const bodyParser= require('body-parser')
 
 

@@ -23,16 +23,10 @@ router.get("/viewgroup", function (req, res, next) {
 
 router.post('/creategroup', function (req, res, next) {
     getRequestBody(req).then(body => {
-      console.log(body);
-      return body;
+        return body;
     }).then(body => {
         return db.createBorrowGroup(body.groupname)
     }).then(rows => {
-        console.log(rows);
-        res.data = {
-            groupid: rows[0].groupid,
-            groupname: rows[0].groupname
-        }
         res.sendStatus(200);
     })
 

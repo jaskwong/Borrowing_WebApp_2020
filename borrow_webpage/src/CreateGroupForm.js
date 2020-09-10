@@ -23,7 +23,6 @@ export default class CreateGroupForm extends Component {
 
         axios.post(url.resolve(baseurl, '/testcreategroup/creategroup'), groupname)
             .then(res => {
-                console.log(res.data);
                 this.setState({apiResponse: 'New group created!'})
             })
     }

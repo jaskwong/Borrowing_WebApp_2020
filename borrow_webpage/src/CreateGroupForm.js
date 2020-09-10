@@ -9,7 +9,7 @@ const baseurl = 'http://localhost:9000';
 
 export default class CreateGroupForm extends Component {
 
-    state = {groupname: ""};
+    state = {groupname: "", groupid: 0, groupnamefinal: ""};
 
 
     changeCreateGroupName = event => {
@@ -23,7 +23,8 @@ export default class CreateGroupForm extends Component {
 
         axios.post(url.resolve(baseurl, '/testcreategroup/creategroup'), groupname)
             .then(res => {
-                this.setState({apiResponse: 'New group created!'})
+                this.setState({groupnamefinal: res.data.groupname})
+                this.setState({groupid: res.data.groupid})
             })
     }
 
@@ -36,7 +37,7 @@ export default class CreateGroupForm extends Component {
                     <input type={"text"} id={"groupname"} name={"groupname"} onChange={this.changeCreateGroupName}/>
                     <input type={"submit"} value={"Submit"}/>
                 </form>
-                <p>{this.state.apiResponse}</p>
+                <p>New group {this.state.groupnamefinal} created with groupID {this.state.groupid}</p>
             </div>)
     }
 }

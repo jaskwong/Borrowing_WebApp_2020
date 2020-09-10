@@ -22,7 +22,10 @@ router.post('/creategroup', function (req, res, next) {
     }).then(body => {
         return db.createBorrowGroup(body.groupname)
     }).then(rows => {
-        res.sendStatus(200);
+        res.send({
+            groupname: rows[0].groupname,
+            groupid: rows[0].groupid
+        });
     })
 
 });

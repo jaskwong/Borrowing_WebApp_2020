@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../Views/App/App.css';
 import axios from 'axios'
 
 export default class ViewGroup extends Component {

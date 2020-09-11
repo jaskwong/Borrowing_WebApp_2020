@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../Views/App/App.css';
 import axios from 'axios'
 import * as url from "url";
 
@@ -27,7 +27,12 @@ export default class CreateGroupForm extends Component {
                 this.setState({groupid: res.data.groupid})
                 document.getElementById("response").innerHTML = "Your group " + this.state.groupnamefinal + " was created with groupID "
                 + this.state.groupid;
-
+                let redirect = new URL('http://localhost:3000/users/createuser')
+                let params = redirect.searchParams;
+                params.append('groupid', res.data.groupid);
+                redirect.search = params.toString();
+                console.log(redirect.toString());
+                window.location = redirect.toString();
             })
     }
 

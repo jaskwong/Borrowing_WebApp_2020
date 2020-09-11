@@ -8,7 +8,7 @@ INSERT INTO items VALUES ("item7", 1, 7, 7, "O");
 INSERT INTO items VALUES ("item8", 1, 8, 8, "O");
 INSERT INTO items VALUES ("item9", 1, 9, 9, "O");
 
-/*INSERT INTO items VALUES ("item1", 2, 1, 1, "O");
+INSERT INTO items VALUES ("item1", 2, 1, 1, "O");
 INSERT INTO items VALUES ("item2", 2, 2, 2, "O");
 INSERT INTO items VALUES ("item3", 2, 3, 3, "O");
 INSERT INTO items VALUES ("item4", 2, 4, 4, "O");
@@ -46,6 +46,6 @@ INSERT INTO items VALUES ("item5", 5, 5, 5, "O");
 INSERT INTO items VALUES ("item6", 5, 6, 6, "O");
 INSERT INTO items VALUES ("item7", 5, 7, 7, "O");
 INSERT INTO items VALUES ("item8", 5, 8, 8, "O");
-INSERT INTO items VALUES ("item9", 5, 9, 9, "O");*/
+INSERT INTO items VALUES ("item9", 5, 9, 9, "O");
 
 

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../Views/App/App.css';
 import axios from 'axios'
 
-export default class App extends Component {
+export default class ViewGroup extends Component {
 
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ export default class App extends Component {
 
     const groupid = this.state.groupid
 
-    axios.get("http://localhost:9000/testcreategroup/viewgroup", { params:{groupid: groupid} })
+    axios.get("http://localhost:9000/groups/viewgroup", { params:{groupid: groupid} })
         .then(res => this.setState({apiResponse:JSON.stringify(res.data)}))
   }
 
@@ -37,7 +37,7 @@ export default class App extends Component {
         <input type={"text"} id={"GroupID"} name={"GroupID"} onChange={this.changeViewGroup}/>
         <input type={"submit"} value={"Submit"}/>
       </form>
-      <p className={"App-intro"}>{this.state.apiResponse}</p>
+      <p className={"ViewGroup-intro"}>{this.state.apiResponse}</p>
     </header>
   </div>)};
 }

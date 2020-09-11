@@ -6,7 +6,7 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var testcreategroupRouter = require('./routes/testcreategroup')
+var groupsRouter = require('./routes/groups')
 const bodyParser= require('body-parser')
 
 
@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use("/testcreategroup", testcreategroupRouter)
+app.use("/groups", groupsRouter)
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({

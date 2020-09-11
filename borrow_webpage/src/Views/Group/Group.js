@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Routes } from './routes';
+import '../../index.css';
+import CreateUser from '../../Components/CreateUser';
+import * as serviceWorker from '../../serviceWorker';
 
-ReactDOM.render(
-    <Router>
-        <Routes />
-    </Router>,
-    document.getElementById('root')
-);
+const Group = props => {
+    return (
+        <CreateUser/>);
+};
+
+export default Group;
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

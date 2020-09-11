@@ -2,10 +2,13 @@ var express = require("express");
 var router = express.Router();
 var db = require('../database').db;
 
-function getRequestBody(req) {
-    return new Promise(function (resolve, reject) {
-        resolve(req.body);
-        reject(null);
+function getReqBody(req) {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve(req.body);
+        } catch (err) {
+            reject(err);
+        }
     })
 }
 
@@ -17,7 +20,7 @@ router.get("/viewgroup", function (req, res, next) {
 })
 
 router.post('/creategroup', function (req, res, next) {
-    getRequestBody(req).then(body => {
+    getReqBody(req).then(body => {
         return body;
     }).then(body => {
         return db.createBorrowGroup(body.groupname)

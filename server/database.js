@@ -46,6 +46,20 @@ class Database {
         }
     }
 
+    async createUser(userid, groupid) {
+        try {
+            console.log(userid)
+            console.log(groupid)
+            await this.query(`INSERT INTO users VALUES (?,?)`,[userid,groupid])
+            let rows = await this.query(`SELECT * FROM users
+                     WHERE userid = ?`,
+                [userid]);
+            return rows;
+        } catch (err) {
+            console.log("error with createuser")
+        }
+    }
+
 }
 
 module.exports = {

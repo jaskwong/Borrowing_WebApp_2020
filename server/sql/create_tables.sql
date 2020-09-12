@@ -36,7 +36,8 @@ CREATE TABLE borrowed (
     amount int,
     borrowdate DATETIME,
     FOREIGN KEY (groupid) REFERENCES borrowgroups(groupid),
-    FOREIGN KEY (userid) REFERENCES users(userid)
+    FOREIGN KEY (userid) REFERENCES users(userid),
+    FOREIGN KEY (itemname) REFERENCES items(itemname)
 );
 
 CREATE TABLE returned (

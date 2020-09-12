@@ -78,21 +78,21 @@ class Database {
             console.log("problem with addItem")
         }
     }
-    async modifyItem(itemname, groupid){
+    async modifyItem(itemname, groupid, newitemname){
         try {
-            await this.query('DELETE FROM items WHERE items.itemname = ? AND items.groupid = ?',
-                [itemname, groupid]);
+            await this.query('UPDATE items SET items.itemname = ? WHERE items.itemname = ? AND items.groupid = ?',
+                [newitemname,itemname,groupid]);
             let rows = await this.query('SELECT * FROM items WHERE items.itemname = ? AND items.groupid = ?',
-                [newname, groupid]);
+                [newitemname, groupid]);
             return JSON.stringify(rows);
         } catch (err) {
             console.log("problem with modifyItem")
         }
     }
-    async deleteItem(){
+    async deleteItem(itemname, groupid){
         try {
-            await this.query('INSERT INTO items VALUES (?,?,?,?,?)',
-                [itemname, groupid, total, total, itemType]);
+            await this.query('DELETE FROM items WHERE items.itemname = ? AND items.groupid = ?',
+                [itemname, groupid]);
             let rows = await this.query('SELECT * FROM items');
             return JSON.stringify(rows);
         } catch (err) {
@@ -148,6 +148,19 @@ class Database {
 
         await this.query('INSERT INTO returned VALUES (?,?,?,?)',
             [returnid, borrowid, amount, date])
+    }
+    //HELPERS
+    checkGroupIdIsAvailable(){
+        //TODO
+    }
+    checkUserIdIsAvailable(){
+        //TODO
+    }
+    checkBorrowIdIsAvaiable(){
+        //TODO
+    }
+    checkReturnIdIsAvaiable(){
+        //TODO
     }
 
 }

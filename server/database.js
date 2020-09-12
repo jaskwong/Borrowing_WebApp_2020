@@ -100,13 +100,12 @@ class Database {
         }
     }
     async borrowItems(itemname, groupid, userid, amount){
-        //TODO might need to be altered if we change schema
+
         try {
             var remaining = 0;
             let rows = await this.query('SELECT * FROM items WHERE items.itemname = ? AND groupid = ?',
                 [itemname, groupid]); //Get remaining amount of item
-            //TODO i need to fix this
-            //remaining = rows[0].remaining;
+            remaining = rows[0].remaining;
             console.log('remaining: ' + remaining);
             let newRemaining = remaining - amount;
             console.log('newRemaining: ' + newRemaining);
@@ -130,14 +129,14 @@ class Database {
     }
     async returnItems(borrowid, amount){
         var returnid = Math.floor(Math.random() * 1000);
+        //I'm not too sure about this date formatting thing. the .toISOString found in app.js turns the date into a string so I'm not sure if database will store that
         var date = new Date();
 
         let rows = await this.query('SELECT * FROM borrowed WHERE borrowed.borrowid = ?',
             [borrowid]);
 
-        //TODO I NEED TO FIX THIS
-        //var itemname = rows[0].itemname;
-        //var groupid = rows[0].groupid;
+        var itemname = rows[0].itemname;
+        var groupid = rows[0].groupid;
 
         let items = await this.query('SELECT * FROM items WHERE items.itemname = ? AND items.groupid = ?',
             [itemname, groupid]);
